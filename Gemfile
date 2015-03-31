@@ -1,5 +1,7 @@
-# A sample Gemfile
 source "https://rubygems.org"
-
 gem 'sinatra'
-# gem "rails"
+
+group :development, :test do
+  gem 'rack-test'
+  gem 'rspec'
+end
