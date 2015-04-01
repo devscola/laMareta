@@ -1,7 +1,7 @@
 $(document).ready(function () {
-  $("#singleupload2").uploadFile({
+  $("#uploadfile").uploadFile({
     url:"/upload",
     allowedTypes:"xlsx,xls",
-    fileName:"myfile"
+    fileName:"birthdayFile"
   });
 });

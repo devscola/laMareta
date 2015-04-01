@@ -5,8 +5,7 @@ get '/' do
 end
 
 post '/upload' do
-	File.open('uploads/' + params['myfile'][:filename], "w") do |f|
-    f.write(params['myfile'][:tempfile].read)
+	File.open('uploads/' + params['birthdayFile'][:filename], "w") do |f|
+    f.write(params['birthdayFile'][:tempfile].read)
   end
-  return "The file was successfully uploaded!"
 end
