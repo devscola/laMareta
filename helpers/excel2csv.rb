@@ -3,14 +3,14 @@ require 'csv'
 
 module ExcelToCsv
 
-  def self.convert_excel_to_csv(filename)
+  def self.convert_excel_to_csv(filename, output)
     if filename =~ /xlsx$/
       excel = Roo::Excelx.new(filename)
     else
       excel = Roo::Excel.new(filename)
     end
 
-    File.open("uploads/filename.csv", "w+") do |file|
+    File.open(output, "w+") do |file|
       begin
         2.upto(excel.last_row) do |line|
           file.write CSV.generate_line excel.row(line)
