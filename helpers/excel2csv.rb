@@ -10,11 +10,24 @@ module ExcelToCsv
       excel = Roo::Excel.new(filename)
     end
 
-    output = File.new("uploads/filename.csv", "w+")
-
-    1.upto(excel.last_row) do |line|
-      output.write CSV.generate_line excel.row(line)
+    File.open("uploads/filename.csv", "w+") do |file|
+      begin
+        2.upto(excel.last_row) do |line|
+          file.write CSV.generate_line excel.row(line)
+        end
+      ensure
+        file.close
+      end
     end
-    
+
+    # filename = 'uploads/filename.csv'
+    # p output
+    # options = {:col_sep => ',', :row_sep => :auto}
+    # n = SmarterCSV.process(filename, options) do |array|
+    #   # we're passing a block in, to process each resulting hash / =row (the block takes array of hashes)
+    #   # when chunking is not enabled, there is only one hash in each array
+    #    MyModel.create( array.first )
+    # end
   end
+
 end
