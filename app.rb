@@ -19,7 +19,7 @@ end
 DataMapper.finalize.auto_upgrade!
 
 get '/' do
-	erb :upload
+  erb :upload
 end
 
 post '/upload' do
