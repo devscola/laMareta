@@ -1,31 +1,18 @@
 require 'sinatra'
-require 'roo'
-require 'csv'
+require './helpers/excel2csv'
+require './helpers/csv_to_db'
+
+include ExcelToCsv
+include CsvToDatabase
 
 get '/' do
-	erb :upload
+  erb :upload
 end
 
 post '/upload' do
-	File.open('uploads/' + params['birthdayFile'][:filename], "w") do |f|
+  File.open('uploads/' + params['birthdayFile'][:filename], "w") do |f|
     f.write(params['birthdayFile'][:tempfile].read)
   end
-  excelFile = 'uploads/' + params['birthdayFile'][:filename]
-  csv_converter(excelFile)
-
-end
-
-def csv_converter (excelFile)
-  if excelFile =~ /xlsx$/
-    excel = Roo::Excelx.new(excelFile)
-  else
-    excel = Roo::Excel.new(excelFile)
-  end
-
-  output = File.open('uploads/test.csv', "w")
-
-2.upto(excel.last_row) do |line|
-  output.write CSV.generate_line excel.row(line)
-end
-
+  ExcelToCsv.convert_excel_to_csv('uploads/' + params['birthdayFile'][:filename])
+  CsvToDatabase.csv_to_database
 end
