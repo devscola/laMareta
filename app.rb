@@ -19,10 +19,12 @@ get '/' do
 end
 
 post '/upload' do
-  File.open('uploads/' + params['birthdayFile'][:filename], "w") do |f|
+  filename = 'uploads/' + params['birthdayFile'][:filename]
+
+  File.open(filename, "w") do |f|
     f.write(params['birthdayFile'][:tempfile].read)
   end
-  filename = 'uploads/' + params['birthdayFile'][:filename]
+
 
   if filename =~ /xlsx$/
     excel = Roo::Excelx.new(filename)
