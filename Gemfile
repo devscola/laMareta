@@ -2,7 +2,6 @@ source "https://rubygems.org"
 
 gem 'sinatra'
 gem 'roo'
-gem 'smarter_csv'
 gem 'data_mapper'
 gem 'dm-sqlite-adapter'
 
