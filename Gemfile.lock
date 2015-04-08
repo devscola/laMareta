@@ -89,7 +89,6 @@ GEM
       rack (~> 1.4)
       rack-protection (~> 1.4)
       tilt (>= 1.3, < 3)
-    smarter_csv (1.0.19)
     spreadsheet (1.0.3)
       ruby-ole (>= 1.0)
     stringex (1.5.1)
@@ -106,4 +105,3 @@ DEPENDENCIES
   roo
   rspec
   sinatra
-  smarter_csv

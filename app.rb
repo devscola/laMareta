@@ -1,11 +1,7 @@
 require 'sinatra'
 require 'data_mapper'
 require 'dm-sqlite-adapter'
-require './helpers/excel2csv'
-require './helpers/csv_to_db'
-
-include ExcelToCsv
-include CsvToDatabase
+require 'roo'
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/users_mareta.db")
 
@@ -34,16 +30,24 @@ get '/' do
 end
 
 post '/upload' do
-  File.open('uploads/' + params['birthdayFile'][:filename], "w") do |f|
+  filename = 'uploads/' + params['birthdayFile'][:filename]
+
+  File.open(filename, "w") do |f|
     f.write(params['birthdayFile'][:tempfile].read)
   end
-  ExcelToCsv.convert_excel_to_csv('uploads/' + params['birthdayFile'][:filename], "uploads/filename.csv")
-  CsvToDatabase.csv_to_database('uploads/filename.csv').each do |line|
-    user = User.create
-    user.name = line[:nombre]
-    user.birthday = line[:fecha]
-    user.save
-    puts user
+
+
+  if filename =~ /xlsx$/
+    excel = Roo::Excelx.new(filename)
+  else
+    excel = Roo::Excel.new(filename)
+  end
+
+  3.upto(excel.last_row) do |line|
+    name = excel.cell(line,'A')
+    birthday = excel.cell(line,'B')
+
+    @user = User.create(:name => name,:birthday => birthday)
   end
   array_users = User.all
   array_users.each do |user|
