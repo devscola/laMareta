@@ -14,9 +14,20 @@ class User
 	property :id, Serial
 	property :name, Text#, :required => true
   property :birthday, Date#, :required => true
+  has n, :invitations
+end
+
+class Invitation
+  include DataMapper::Resource
+  property :id, Serial
+  property :code, Text
+  property :created_at, DateTime
+  property :updated_at, DateTime
+  belongs_to :user
 end
 
 DataMapper.finalize.auto_upgrade!
+
 
 get '/' do
   erb :upload
@@ -34,4 +45,13 @@ post '/upload' do
     user.save
     puts user
   end
+  array_users = User.all
+  array_users.each do |user|
+    user_birthday = user.birthday.to_s.split('-').shift
+    p user_birthday
+    date = Date.today.to_s.split('-').shift
+    p date
+
+  end
+  redirect '/'
 end
