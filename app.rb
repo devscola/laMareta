@@ -36,17 +36,18 @@ DataMapper.finalize.auto_upgrade!
 
 
 get '/' do
-  p File.exist?('users_mareta.db')
-  p User.all
   @users = User.all
-  CheckUsers.check_users_mareta(@users)
-  SendInvitation.send_email_invitation(@users)
+  if @users.any?
+    CheckUsers.check_users_mareta(@users)
+    SendInvitation.send_email_invitation(@users)
+  end
   erb :upload
 end
 
 post '/upload' do
+
   users = User.all
-  users.destroy
+  users.destroy if users.any?
 
   filename = 'uploads/' + params['birthdayFile'][:filename]
 
@@ -68,9 +69,6 @@ post '/upload' do
 
     @user = User.create(:name => name,:birthday => birthday, :email => email, :winner => false)
   end
-  redirect '/succes'
+  redirect '/'
 end
 
-get '/succes' do
-  erb :succes
-end

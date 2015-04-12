@@ -8,7 +8,7 @@ module SendInvitation
 
   def send_email_invitation(users)
     users.each do |user|
-      if user.winner = true
+      if user.winner = true 
       Pony.mail({:to => user.email,
                  :from => "daviddsrperiodismo@gmail",
                  :subject => 'Happy Birthday¡¡',
@@ -24,6 +24,9 @@ module SendInvitation
                    :domain               => "localhost" # the HELO domain provided by the client to the server
                  }})
       user.winner = false
+      invitation = Invitation.create
+      invitation.user = user
+      invitation.save
       end 
     end   
   end
