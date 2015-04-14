@@ -8,18 +8,19 @@ module CheckUsers
       birthday_user = Time.mktime(0, user.birthday.month, user.birthday.day)
       date_today = Time.parse(Date.today.to_s)
       date_today = Time.mktime(0, Date.today.month, Date.today.day)
-      if user.invitations.any?
-        invitations = user.invitations.where("created_at::date = ?", Date.today).count
+      p user.respond_to?(:invitations)
+      if user.respond_to?(:invitations)
         p user.invitations
-      end
-      p birthday_user
-      p date_today
-      p birthday_user == date_today
-      if birthday_user == date_today && invitations == 0
-        p invitations
+        invitations_user = user.invitations.all(:created_at.gte => Date.today).count
+        p invitations_user
+        if birthday_user == date_today && invitations_user == 0
+          user.winner = true  
+        end      
+      else 
+        if birthday_user == date_today
         user.winner = true
+        end
       end
-      p invitations
     end
   end
 

@@ -25,8 +25,12 @@ module SendInvitation
                  }})
       user.winner = false
       invitation = Invitation.create
+      invitation.created_at = Time.now
+      invitation.updated_at = Time.now
       invitation.user = user
       invitation.save
+      invitation
+      p user.invitations
       end 
     end   
   end

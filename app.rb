@@ -40,11 +40,6 @@ DataMapper.finalize.auto_upgrade!
 
 
 get '/' do
-  @users = User.all
-  if @users.any?
-    CheckUsers.check_users_mareta(@users)
-    SendInvitation.send_email_invitation(@users)
-  end
   erb :upload
 end
 
@@ -74,5 +69,14 @@ post '/upload' do
     @user = User.create(:name => name,:birthday => birthday, :email => email, :winner => false)
   end
   redirect '/'
+end
+
+get '/sendinvitations' do
+  @users = User.all
+  if @users.any?
+    CheckUsers.check_users_mareta(@users)
+    SendInvitation.send_email_invitation(@users)
+  end
+  erb :sendinvitations
 end
 
