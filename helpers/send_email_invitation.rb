@@ -4,11 +4,9 @@ require './helpers/code'
 
 include Code
 
-module SendInvitation
+module InvitationSender
 
-  def send_email_invitation(users)
-    users.each do |user|
-      if user.winner = true 
+  def send_invitation_to(user)
       Pony.mail({:to => user.email,
                  :from => "daviddsrperiodismo@gmail",
                  :subject => 'Happy Birthday¡¡',
@@ -23,11 +21,11 @@ module SendInvitation
                    :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
                    :domain               => "localhost" # the HELO domain provided by the client to the server
                  }})
-      user.winner = false
       invitation = Invitation.create
+      invitation.created_at = Time.now
+      invitation.updated_at = Time.now
       invitation.user = user
       invitation.save
-      end 
-    end   
+      invitation  
   end
 end
