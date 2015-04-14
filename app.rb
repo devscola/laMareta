@@ -12,7 +12,11 @@ include Code
 include CheckUsers
 include SendInvitation
 
-DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/users_mareta.db")
+#DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/users_mareta.db")
+
+configure :development do
+  DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
+end
 
 class User
 	include DataMapper::Resource
