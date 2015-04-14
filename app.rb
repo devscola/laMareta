@@ -5,8 +5,12 @@ require 'roo'
 require 'pony'
 
 require './helpers/code'
+require './helpers/check_birthday_users'
+require './helpers/send_email_invitation'
 
 include Code
+include CheckUsers
+include SendInvitation
 
 DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/users_mareta.db")
 
@@ -16,13 +20,13 @@ class User
 	property :name, Text#, :required => true
   property :birthday, Date#, :required => true
   property :email, Text
+  property :winner, Boolean, :default => false
   has n, :invitations
 end
 
 class Invitation
   include DataMapper::Resource
   property :id, Serial
-  property :code, Text
   property :created_at, DateTime
   property :updated_at, DateTime
   belongs_to :user
@@ -32,10 +36,19 @@ DataMapper.finalize.auto_upgrade!
 
 
 get '/' do
+  @users = User.all
+  if @users.any?
+    CheckUsers.check_users_mareta(@users)
+    SendInvitation.send_email_invitation(@users)
+  end
   erb :upload
 end
 
 post '/upload' do
+
+  users = User.all
+  users.destroy if users.any?
+
   filename = 'uploads/' + params['birthdayFile'][:filename]
 
   File.open(filename, "w") do |f|
@@ -54,6 +67,7 @@ post '/upload' do
     birthday = excel.cell(line,'B')
     email = excel.cell(line, 'C')
 
+<<<<<<< HEAD
     @user = User.create(:name => name,:birthday => birthday, :email => email)
   end
   array_users = User.all
@@ -82,6 +96,10 @@ post '/upload' do
               :domain               => "localhost" # the HELO domain provided by the client to the server
               }})
     end
+=======
+    @user = User.create(:name => name,:birthday => birthday, :email => email, :winner => false)
+>>>>>>> f4dac098f17dd1ebd17183f7835778bfd334fab9
   end
   redirect '/'
 end
+
