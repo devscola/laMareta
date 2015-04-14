@@ -6,11 +6,10 @@ require 'pony'
 
 require './helpers/code'
 require './helpers/check_birthday_users'
-require './helpers/send_email_invitation'
 
 include Code
 include CheckUsers
-include SendInvitation
+
 
 #DataMapper::setup(:default, "sqlite3://#{Dir.pwd}/users_mareta.db")
 
@@ -75,7 +74,6 @@ get '/sendinvitations' do
   @users = User.all
   if @users.any?
     CheckUsers.check_users_mareta(@users)
-    SendInvitation.send_email_invitation(@users)
   end
   erb :sendinvitations
 end
