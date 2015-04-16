@@ -16,7 +16,7 @@ include CheckUsers
 
 
 configure :development do
-  DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
+  DataMapper.setup(:default, 'postgres://postgres:12345@localhost/usersmareta')
 end
 
 DataMapper.finalize.auto_upgrade!
