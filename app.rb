@@ -19,6 +19,10 @@ configure :development do
   DataMapper.setup(:default, 'postgres://postgres:12345@localhost/usersmareta')
 end
 
+configure :production do
+  DataMapper.setup(:default, ENV['POSTGRES_URL'])
+end
+
 DataMapper.finalize.auto_upgrade!
 
 
