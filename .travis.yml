@@ -2,3 +2,10 @@ language: ruby
 rvm:
 - 2.0.0-p247
 script: bundle exec rspec spec
+deploy:
+  provider: heroku
+  api_key:
+    secure: GHHU8VCQ++3StPoDJFwjvqrSWyuvII5bQ7g3SYbp24kBU0DkVXMS1RRtKPww3ottI90wtmZi+uaMpWzONnTNsoxbW+jEGfsGAFrTB/qM5j1op5x16iAJrUXrcOh0olANZkNNizg93lt4HylNfZZmAUFwbjTJZpXnf87SEZVgArg=
+env:
+  global:
+    secure: Od43uiNdcMGkrip2BronjVUAF+gHVZRK6nHsMJ2CyO18M+gw/bXMmxEvEz74UMUKnIiRJBABz8vo1L417N9/sEelhWfkE8TIFVgiYdm8exaob+5sl0M3fUlT2PVVQ5LVOUSgGKSoAViAR0GntSV7t1fcWt73ejM1UklZXumi1tE=
