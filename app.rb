@@ -14,6 +14,11 @@ require './models/invitations.rb'
 include Code
 include CheckUsers
 
+configure :test do
+  adapter: postgresql
+  database: usersmareta
+  username: postgres
+end
 
 configure :development do
   DataMapper.setup(:default, 'postgres://postgres:12345@localhost/usersmareta')

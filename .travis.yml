@@ -6,6 +6,8 @@ before_install:
   - sudo apt-get install -qq postgresql
   - sudo apt-get install -qq postgresql-server-dev-9.3
   - sudo apt-get install -qq libpq-dev
+before_script:
+  - psql -c 'create database usersmareta;' -U postgres
 script: bundle exec rspec spec
 deploy:
   provider: heroku
