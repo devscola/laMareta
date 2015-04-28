@@ -2,17 +2,13 @@ language: ruby
 rvm:
 - 2.0.0-p247
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq postgresql
-  - sudo apt-get install -qq postgresql-server-dev-9.3
-  - sudo apt-get install -qq libpq-dev
+- sudo apt-get update -qq
+- sudo apt-get install -qq postgresql
+- sudo apt-get install -qq postgresql-server-dev-9.3
+- sudo apt-get install -qq libpq-dev
 before_script:
-  - psql -c 'create database usersmareta;' -U postgres
+- psql -c 'create database usersmareta;' -U postgres
 script: bundle exec rspec spec
-deploy:
-  provider: heroku
-  api_key:
-    secure: GHHU8VCQ++3StPoDJFwjvqrSWyuvII5bQ7g3SYbp24kBU0DkVXMS1RRtKPww3ottI90wtmZi+uaMpWzONnTNsoxbW+jEGfsGAFrTB/qM5j1op5x16iAJrUXrcOh0olANZkNNizg93lt4HylNfZZmAUFwbjTJZpXnf87SEZVgArg=
 env:
   global:
-    secure: Od43uiNdcMGkrip2BronjVUAF+gHVZRK6nHsMJ2CyO18M+gw/bXMmxEvEz74UMUKnIiRJBABz8vo1L417N9/sEelhWfkE8TIFVgiYdm8exaob+5sl0M3fUlT2PVVQ5LVOUSgGKSoAViAR0GntSV7t1fcWt73ejM1UklZXumi1tE=
+    secure: fCqhqnv3QCpX8AvDsD42lGX6uVgAPN8Jcw3Y7K6B0W9AihbrrelTy+8nxNa5F0GLbdr28O0BSYOUBUyzBg2o4xaSvSh4h3dsUh+7ddk76SFvIAuA0lbyh/8s0pWjV+hf9jVYkG4yKKzaOKz07bTCANwhhmF6NulsRy1Z88FCZKI=
