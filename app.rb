@@ -15,9 +15,7 @@ include Code
 include CheckUsers
 
 configure :test do
-  adapter: postgresql
-  database: usersmareta
-  username: postgres
+  DataMapper.setup(:default, 'postgres://postgres@localhost/usersmareta')
 end
 
 configure :development do
