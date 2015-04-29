@@ -23,7 +23,7 @@ configure :development do
 end
 
 configure :production do
-  DataMapper.setup(:default, ENV['POSTGRES_URL'])
+  DataMapper.setup(:default, ENV['DATABASE_URL'])
 end
 
 DataMapper.finalize.auto_upgrade!
