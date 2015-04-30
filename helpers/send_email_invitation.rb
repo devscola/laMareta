@@ -8,16 +8,16 @@ module InvitationSender
 
   def send_invitation_to(user)
       Pony.mail({:to => user.email,
-                 :from => "daviddsrperiodismo@gmail",
+                 :from => ENV['MAIL_USERNAME'],
                  :subject => 'Happy Birthday¡¡',
                  :body => "Happy Birthday #{user.name}, you have a free meal with this code #{Code.generate}",
                  :via => :smtp,
                  :via_options => {
-                   :address              => 'smtp.gmail.com',
+                   :address              => ENV['MAIL_DOMAIN'],
                    :port                 => '587',
                    :enable_starttls_auto => true,
-                   :user_name            => 'daviddsrperiodismo@gmail.com',
-                   :password             => '20041990',
+                   :user_name            => ENV['MAIL_USERNAME'],
+                   :password             => ENV['MAIL_PASSWORD'],
                    :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
                    :domain               => ENV['HELO_DOMAIN'] # the HELO domain provided by the client to the server
                  }})
