@@ -19,13 +19,13 @@ module InvitationSender
                    :user_name            => 'daviddsrperiodismo@gmail.com',
                    :password             => '20041990',
                    :authentication       => :plain, # :plain, :login, :cram_md5, no auth by default
-                   :domain               => "localhost" # the HELO domain provided by the client to the server
+                   :domain               => ENV['HELO_DOMAIN'] # the HELO domain provided by the client to the server
                  }})
       invitation = Invitation.create
       invitation.created_at = Time.now
       invitation.updated_at = Time.now
       invitation.user = user
       invitation.save
-      invitation  
+      invitation
   end
 end
