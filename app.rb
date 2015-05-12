@@ -6,27 +6,16 @@ require 'pony'
 # HELPERS
 require './helpers/code'
 require './helpers/check_birthday_users'
+require './helpers/parse_excel'
 
 # MODELS
-require './models/users.rb'
+require './models/vip_client.rb'
 require './models/invitations.rb'
 
 include Code
 include CheckUsers
 
-configure :test do
-  DataMapper.setup(:default, 'postgres://postgres@localhost/usersmareta')
-end
 
-configure :development do
-  DataMapper.setup(:default, 'postgres://postgres:12345@localhost/usersmareta')
-end
-
-configure :production do
-  DataMapper.setup(:default, ENV['DATABASE_URL'])
-end
-
-DataMapper.finalize.auto_upgrade!
 
 
 get '/' do
@@ -35,8 +24,7 @@ end
 
 post '/upload' do
 
-  users = User.all
-  users.destroy if users.any?
+  vip_clients = VipClients.all
 
   filename = 'uploads/' + params['birthdayFile'][:filename]
 
@@ -51,20 +39,9 @@ post '/upload' do
     excel = Roo::Excel.new(filename)
   end
 
-  3.upto(excel.last_row) do |line|
-    name = excel.cell(line,'A')
-    birthday = excel.cell(line,'B')
-    email = excel.cell(line, 'C')
-
-    @user = User.create(:name => name,:birthday => birthday, :email => email, :winner => false)
-  end
+  ExcelParser.parse(filename)
+  
+    @user = User.create(:name => name,:birthday => birthday, :email => email)
   redirect '/'
 end
 
-get '/sendinvitations' do
-  @users = User.all
-  if @users.any?
-    CheckUsers.check_users_mareta(@users)
-  end
-  erb :sendinvitations
-end
