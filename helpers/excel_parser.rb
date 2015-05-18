@@ -4,7 +4,11 @@ class ExcelParser
   class << self
     def parse(file_name)
       ExcelParser.validates(file_name)
-      excel_file = Roo::Excelx.new(file_name)
+      if file_name =~ /xlsx$/
+        excel_file = Roo::Excelx.new(file_name)
+      else
+        excel_file = Roo::Excel.new(file_name)
+      end
       list_clients = []
       3.upto(excel_file.last_row) do |line|
         data_client = {}
@@ -17,11 +21,15 @@ class ExcelParser
     end
 
     def validates(file_name)
-      excel_file = Roo::Excelx.new(file_name)
+      if file_name =~ /xlsx$/
+        excel_file = Roo::Excelx.new(file_name)
+      else
+        excel_file = Roo::Excel.new(file_name)
+      end
       result = 3.upto(excel_file.last_row).all? { |line| 
         valid_name?(excel_file.cell(line,'A')) && valid_date?(excel_file.cell(line,'B'), "%d-%m-%Y") && valid_email?(excel_file.cell(line, 'C'))
       }
-      raise FormatError.new "Excel format not valid" unless result
+      raise FormatError.new "Dates format not valid" unless result
       result
     end
 

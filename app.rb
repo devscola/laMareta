@@ -23,14 +23,10 @@ class LaMareta < Sinatra::Application
   post '/upload' do
     filename = 'uploads/' + params['birthdayFile'][:filename]
 
-      File.open(filename, "w") do |f|
-        f.write(params['birthdayFile'][:tempfile].read)
-      end
-  # if filename =~ /xlsx$/
-  #   excel = Roo::Excelx.new(filename)
-  # else
-  #   excel = Roo::Excel.new(filename)
-  # end
+    File.open(filename, "w") do |f|
+      f.write(params['birthdayFile'][:tempfile].read)
+    end
+
     list_clients = ExcelParser.parse(filename)
     VipClient.insert_into_database(list_clients)
     redirect '/uploaded'

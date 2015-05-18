@@ -10,12 +10,19 @@ describe ExcelParser do
   describe "#parse" do
     it "creates a collection of clients from an xlsx file" do
       file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest.xlsx')
-      #excel = Roo::Excelx.new(file_path)
       expect(ExcelParser.parse(file_path)).to eq(
       	[
       		{name: "David", birthday: "13-12-1985", email: "daviddsrperiodismo@gmail.com"},
       		{name: "Javier", birthday: "05-05-1985", email: "javier@gmail.com"}
       		])            
+    end
+    it "creates a collection of clients from an xls file" do
+      file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest.xls')
+      expect(ExcelParser.parse(file_path)).to eq(
+        [
+          {name: "David", birthday: "13-12-1985", email: "daviddsrperiodismo@gmail.com"},
+          {name: "Javier", birthday: "05-05-1985", email: "javier@gmail.com"}
+          ])
     end
   end
   describe "#validates" do
