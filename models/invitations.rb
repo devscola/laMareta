@@ -3,5 +3,5 @@ class Invitation
   property :id, Serial
   property :created_at, DateTime
   property :updated_at, DateTime
-  belongs_to :VipClient
+  belongs_to :VipClient#, required: false
 end

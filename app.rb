@@ -1,47 +1,43 @@
 require 'sinatra'
-require 'data_mapper'
-require 'roo'
-require 'pony'
+
+
 
 # HELPERS
-require './helpers/code'
-require './helpers/check_birthday_users'
-require './helpers/parse_excel'
 
+require './helpers/excel_parser'
 # MODELS
-require './models/vip_client.rb'
-require './models/invitations.rb'
 
-include Code
-include CheckUsers
+
+require './helpers/data_base'
 
 
 
+DB.initialize
 
-get '/' do
-  erb :upload
-end
+class LaMareta < Sinatra::Application
 
-post '/upload' do
-
-  vip_clients = VipClients.all
-
-  filename = 'uploads/' + params['birthdayFile'][:filename]
-
-  File.open(filename, "w") do |f|
-    f.write(params['birthdayFile'][:tempfile].read)
+  get '/' do
+    erb :upload
   end
 
+  post '/upload' do
+    filename = 'uploads/' + params['birthdayFile'][:filename]
 
-  if filename =~ /xlsx$/
-    excel = Roo::Excelx.new(filename)
-  else
-    excel = Roo::Excel.new(filename)
+      File.open(filename, "w") do |f|
+        f.write(params['birthdayFile'][:tempfile].read)
+      end
+  # if filename =~ /xlsx$/
+  #   excel = Roo::Excelx.new(filename)
+  # else
+  #   excel = Roo::Excel.new(filename)
+  # end
+    list_clients = ExcelParser.parse(filename)
+    VipClient.insert_into_database(list_clients)
+    redirect '/uploaded'
   end
 
-  ExcelParser.parse(filename)
-  
-    @user = User.create(:name => name,:birthday => birthday, :email => email)
-  redirect '/'
-end
+  get '/uploaded' do
+    erb :uploaded_file
+  end
 
+end

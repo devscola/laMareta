@@ -4,7 +4,7 @@ require "rack/test"
 set :enviroment, :test
 
 def app
-  Sinatra::Application
+  LaMareta
 end
 
 describe 'App Service' do
