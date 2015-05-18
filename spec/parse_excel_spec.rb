@@ -1,10 +1,6 @@
-
 require 'roo'
-
 require 'spec_helper'
 require './helpers/excel_parser'
-
-
 
 describe ExcelParser do
   describe "#parse" do
@@ -15,7 +11,7 @@ describe ExcelParser do
       	[
       		{name: "David", birthday: "13-12-1985", email: "daviddsrperiodismo@gmail.com"},
       		{name: "Javier", birthday: "05-05-1985", email: "javier@gmail.com"}
-      		])            
+      		])
     end
   end
   describe "#validates" do
