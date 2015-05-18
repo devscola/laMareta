@@ -3,7 +3,7 @@ require 'roo'
 class ExcelParser
   class << self
     def parse(file_name)
-      raise "Excel format not valid" unless ExcelParser.validates(file_name)
+      ExcelParser.validates(file_name)
       excel_file = Roo::Excelx.new(file_name)
       list_clients = []
       3.upto(excel_file.last_row) do |line|
@@ -18,11 +18,11 @@ class ExcelParser
 
     def validates(file_name)
       excel_file = Roo::Excelx.new(file_name)
-      if 3.upto(excel_file.last_row) { |line| valid_name?(excel_file.cell(line,'A')) && valid_date?(excel_file.cell(line,'B'), "%d/%m/%Y") && valid_email?(excel_file.cell(line, 'C')) }
-        true
-      else
-        false
-      end
+      result = 3.upto(excel_file.last_row).all? { |line| 
+        valid_name?(excel_file.cell(line,'A')) && valid_date?(excel_file.cell(line,'B'), "%d-%m-%Y") && valid_email?(excel_file.cell(line, 'C'))
+      }
+      raise FormatError.new "Excel format not valid" unless result
+      result
     end
 
     def valid_date?(str, format="%d/%m/%Y")
@@ -37,4 +37,8 @@ class ExcelParser
       string[/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i] == string
     end
   end
+end
+
+class FormatError < StandardError
+
 end

@@ -22,7 +22,11 @@ describe ExcelParser do
     it "validates the dates format in excel file" do
       file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest.xlsx')
       #allow(Roo::Excelx).to receive(:new).with(file_path).and_return(:excel)
-      expect(ExcelParser.validates(file_path)).to eq(true)
+      expect{ExcelParser.validates(file_path)}.not_to raise_error
+    end
+    it "raises an error when excel format is not correct" do
+      file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest_bad_format.xlsx')
+      expect{ExcelParser.validates(file_path)}.to raise_error(FormatError)
     end
   end
 end
