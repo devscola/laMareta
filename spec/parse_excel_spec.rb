@@ -1,10 +1,6 @@
-
 require 'roo'
-
 require 'spec_helper'
 require './helpers/excel_parser'
-
-
 
 describe ExcelParser do
   describe "#parse" do
@@ -14,7 +10,7 @@ describe ExcelParser do
       	[
       		{name: "David", birthday: "13-12-1985", email: "daviddsrperiodismo@gmail.com"},
       		{name: "Javier", birthday: "05-05-1985", email: "javier@gmail.com"}
-      		])            
+      		])
     end
     it "creates a collection of clients from an xls file" do
       file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest.xls')
@@ -28,7 +24,6 @@ describe ExcelParser do
   describe "#validates" do
     it "validates the dates format in excel file" do
       file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest.xlsx')
-      #allow(Roo::Excelx).to receive(:new).with(file_path).and_return(:excel)
       expect{ExcelParser.validates(file_path)}.not_to raise_error
     end
     it "raises an error when excel format is not correct" do
