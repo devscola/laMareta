@@ -6,6 +6,7 @@ require './models/vip_client.rb'
 
 class DB
   def self.initialize
+    
 	DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
 	DataMapper.finalize.auto_upgrade!
   end
