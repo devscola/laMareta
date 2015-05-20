@@ -1,6 +1,10 @@
 require 'roo'
 
 class ExcelParser
+  LETTERS = /[a-zA-Z]+/
+  EMAIL = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+  DATE_FORMAT = "%d-%m-%Y"
+
   class << self
     def parse(file_name)
       ExcelParser.validates(file_name)
@@ -27,22 +31,22 @@ class ExcelParser
         excel_file = Roo::Excel.new(file_name)
       end
       result = 3.upto(excel_file.last_row).all? { |line| 
-        valid_name?(excel_file.cell(line,'A')) && valid_date?(excel_file.cell(line,'B'), "%d-%m-%Y") && valid_email?(excel_file.cell(line, 'C'))
+        valid_name?(excel_file.cell(line,'A')) && valid_date?(excel_file.cell(line,'B')) && valid_email?(excel_file.cell(line, 'C'))
       }
       raise FormatError.new "Dates format not valid" unless result
       result
     end
 
-    def valid_date?(str, format="%d/%m/%Y")
-      Date.strptime(str,format) rescue false
+    def valid_date?(str)
+      Date.strptime(str, DATE_FORMAT) rescue false
     end
 
     def valid_name?(string)
-      string[/[a-zA-Z]+/] == string
+      string[LETTERS] == string
     end
 
     def valid_email?(string)
-      string[/\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i] == string
+      string[EMAIL] == string
     end
   end
 end
