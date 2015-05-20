@@ -1,13 +1,35 @@
-require 'sinatra'
+ENV['RACK_ENV'] ||= 'development'
+ 
+require 'bundler'
+Bundler.require :default, ENV['RACK_ENV'].to_sym
+
+require 'sinatra/base'
+require 'dm-postgres-adapter'
+
 
 # HELPERS
 require './helpers/excel_parser'
 
 # MODELS
-require './helpers/data_base'
-DB.initialize
+require './models/vip_client.rb'
+#require './helpers/data_base'
+#DB.initialize
 
-class LaMareta < Sinatra::Application
+
+
+class LaMareta < Sinatra::Base
+
+  configure :development do 
+    DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
+    DataMapper.finalize.auto_upgrade! 
+  end
+
+  configure :production do
+    DataMapper.setup(:default, ENV['DATABASE_URL'])
+    DataMapper.finalize.auto_upgrade! 
+  end
+
+  
 
   get '/' do
     erb :upload
@@ -20,8 +42,8 @@ class LaMareta < Sinatra::Application
       f.write(params['birthdayFile'][:tempfile].read)
     end
 
-    list_clients = ExcelParser.parse(filename)
-    VipClient.insert_into_database(list_clients)
+    clients_list = ExcelParser.parse(filename)
+    VipClient.insert_into_database(clients_list)
     redirect '/uploaded'
   end
 
