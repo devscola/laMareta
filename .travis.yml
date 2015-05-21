@@ -11,4 +11,5 @@ before_script:
 script: bundle exec rspec spec
 env:
   global:
-    secure: fCqhqnv3QCpX8AvDsD42lGX6uVgAPN8Jcw3Y7K6B0W9AihbrrelTy+8nxNa5F0GLbdr28O0BSYOUBUyzBg2o4xaSvSh4h3dsUh+7ddk76SFvIAuA0lbyh/8s0pWjV+hf9jVYkG4yKKzaOKz07bTCANwhhmF6NulsRy1Z88FCZKI=
+  - secure: fCqhqnv3QCpX8AvDsD42lGX6uVgAPN8Jcw3Y7K6B0W9AihbrrelTy+8nxNa5F0GLbdr28O0BSYOUBUyzBg2o4xaSvSh4h3dsUh+7ddk76SFvIAuA0lbyh/8s0pWjV+hf9jVYkG4yKKzaOKz07bTCANwhhmF6NulsRy1Z88FCZKI=
+  - secure: baUzKmnRxpFIUxiOsQUu3/SxZB+biLhieAzv6QBcqbu104S3RIi/tZOIAt9vf8Tv7KhPk1Y0+1l7o2x7vc3QdNOyGC2vlc3dFiOUlogNQPfvpF6oanmpJlSnuMnk3M4IZO9/I54fuaBsS6k/zDFY1IEhFxaY3GsgwFjDuQxPhXg=
