@@ -17,6 +17,22 @@ require './models/vip_client.rb'
 
 class LaMareta < Sinatra::Base
 
+  # configure :test do
+  #  adapter: postgresql
+  #  database: usersmareta
+  #  username: postgres
+  # end
+
+
+  configure :test do 
+    if ENV['DATABASE_TEST_URL']
+      DataMapper.setup(:default, ENV['DATABASE_TEST_URL'])
+    else
+      DataMapper.setup(:default, 'postgres://david:123456@localhost/test_usersmareta')
+    end
+      
+    DataMapper.finalize.auto_upgrade! 
+  end
 
   configure :development do 
     DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
