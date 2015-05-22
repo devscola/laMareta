@@ -12,12 +12,11 @@ require './helpers/excel_parser'
 
 # MODELS
 require './models/vip_client.rb'
-#require './helpers/data_base'
-#DB.initialize
 
 
 
 class LaMareta < Sinatra::Base
+
 
   configure :development do 
     DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
