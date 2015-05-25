@@ -1,5 +1,5 @@
 ENV['RACK_ENV'] ||= 'development'
- 
+
 require 'bundler'
 Bundler.require :default, ENV['RACK_ENV'].to_sym
 
@@ -19,17 +19,17 @@ require './models/vip_client.rb'
 
 class LaMareta < Sinatra::Base
 
-  configure :development do 
-    DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
-    DataMapper.finalize.auto_upgrade! 
+  configure :development, :test do
+    DataMapper.setup(:default, 'postgres://postgres@localhost/usersmareta')
+    DataMapper.finalize.auto_upgrade!
   end
 
   configure :production do
     DataMapper.setup(:default, ENV['DATABASE_URL'])
-    DataMapper.finalize.auto_upgrade! 
+    DataMapper.finalize.auto_upgrade!
   end
 
-  
+
 
   get '/' do
     erb :upload

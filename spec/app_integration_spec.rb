@@ -6,7 +6,7 @@ Capybara.app = LaMareta
 
 describe "Updating Vip customers database", :type => :feature do
   before {
-    DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
+    DataMapper.setup(:default, 'postgres://postgres@localhost/usersmareta')
     DataMapper.finalize.auto_upgrade!
   }
   after {

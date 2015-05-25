@@ -11,7 +11,7 @@ require File.join(File.dirname(__FILE__), '..', '..', 'models', 'vip_client.rb')
 
 describe VipClient do
   before {
-    DataMapper.setup(:default, 'postgres://david:123456@localhost/usersmareta')
+    DataMapper.setup(:default, 'postgres://postgres@localhost/usersmareta')
     DataMapper.finalize.auto_upgrade!
   }
   after {
@@ -67,7 +67,7 @@ describe VipClient do
       client = VipClient.first
       expect(client.name).to eq("David")
       expect(client.birthday.to_s).to eq("1985-12-13")
-      expect(client.email).to eq("daviddsrperiodismo@gmail.com")      
+      expect(client.email).to eq("daviddsrperiodismo@gmail.com")
     end
   end
 end
