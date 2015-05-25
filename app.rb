@@ -12,8 +12,6 @@ require './helpers/excel_parser'
 
 # MODELS
 require './models/vip_client.rb'
-#require './helpers/data_base'
-#DB.initialize
 
 
 
@@ -28,7 +26,6 @@ class LaMareta < Sinatra::Base
     DataMapper.setup(:default, ENV['DATABASE_URL'])
     DataMapper.finalize.auto_upgrade!
   end
-
 
 
   get '/' do

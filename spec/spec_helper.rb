@@ -21,7 +21,9 @@ require_relative File.join('..', 'app')
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  #config.include Rack::Test::Methods
+  # config.include Rack::Test::Methods
+  # DataMapper.setup(:default, 'postgres://postgres:12345@localhost/usersmareta')
+  # DataMapper.finalize.auto_upgrade!
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.

@@ -1,21 +1,50 @@
-<h1>My file uploader!!</h1>
-<form action="/upload" method="post" enctype='multipart/form-data'>
-  <div class="input-group">
-    <span class="input-group-btn">
-    <span class="btn btn-primary btn-file">
-            Browse&hellip; 
-            <input type="file" name='birthdayFile' accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
-    </span>
-    </span>
-    <input type="text" class="form-control"  readonly>
-  </div>
+<div class="jumbotron">
+  <h1 class="title_jumbotron">'La Mareta'</h1>
+  <h3 class="subtitle_jumbotron">Actualizar base de datos</h3>
+  <form action="/upload" method="post" enctype='multipart/form-data' class="form">
+    <div class="input-group">
+      <span class="input-group-btn">
+      <span class="btn btn-primary btn-file">
+            Examinar&hellip; 
+        <input type="file" name='birthdayFile' accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel">
+      </span>
+      <span class="btn-submit">
+        <input type='submit' value='Upload!' id="Upload_excel" class="btn btn-primary">
+      </span>
+      </span>
+       <input type="text" class="form-control"  readonly>
+    </div>
 
-    <input type='submit' value='Upload!' id="Upload_excel" class="btn btn-primary">
-</form>
+      <!-- <input type='submit' value='Upload!' id="Upload_excel" class="btn btn-primary"> -->
+  </form>
+</div>
 
 
 
 <style>
+  .jumbotron {
+    width: 600px;
+    text-align: center;
+    margin-top: 50px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .title_jumbotron {
+    margin-top: 5px;
+    text-align: center;
+  }
+
+  .subtitle_jumbotron {
+    text-align: center;
+  }
+
+  .form {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
  .btn-file {
      position: relative;
      overflow: hidden;

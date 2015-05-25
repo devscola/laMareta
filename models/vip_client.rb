@@ -12,6 +12,8 @@ class VipClient
   	end
   end
 
+  private
+
   def self.exists?(client)
     VipClient.count(:name=> client[:name], :birthday=> client[:birthday], :email=> client[:email]) > 0
   end
