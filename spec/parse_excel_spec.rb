@@ -27,19 +27,19 @@ describe ExcelParser do
     it "raises an error when excel email format is not correct" do
       file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest_bad_email.xlsx')
 
-      expect{ExcelParser.parse(file_path)}.to raise_error(EmailError)
+      expect{ExcelParser.parse(file_path)}.to raise_error(ExcelParser::EmailError)
     end
 
     it "raises an error when excel date format is not correct" do
       file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest_bad_date.xlsx')
 
-      expect{ExcelParser.parse(file_path)}.to raise_error(DateFormatError)
+      expect{ExcelParser.parse(file_path)}.to raise_error(ExcelParser::DateFormatError)
     end
 
     it "raises an error when excel name format is not correct" do
       file_path = File.join(File.dirname(__FILE__), 'fixtures', 'databasetest_bad_name.xlsx')
-      
-      expect{ExcelParser.parse(file_path)}.to raise_error(NameError)
+
+      expect{ExcelParser.parse(file_path)}.to raise_error(ExcelParser::NameError)
     end
 
   end

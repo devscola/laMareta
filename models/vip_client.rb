@@ -8,7 +8,7 @@ class VipClient
 
   def self.insert_into_database(list_clients)
   	list_clients.each do |client|
-  		VipClient.create(client) if VipClient.exists?(client) == false
+  		VipClient.create(client) unless VipClient.exists?(client) 
   	end
   end
 

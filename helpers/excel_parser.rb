@@ -51,18 +51,19 @@ class ExcelParser
       begin
         Date.strptime(string, DATE_FORMAT)
       rescue ArgumentError 
-        raise ExcelParser::DateFormatError.new "Date format not valid" 
+        raise DateFormatError.new "Date format not valid" 
       end
     end
 
     def check_name!(string)
-      raise ExcelParser::NameError.new "Name format not valid" unless string[LETTERS] == string
+      raise NameError.new "Name format not valid" unless string[LETTERS] == string
     end 
 
     def check_email!(string)
-      raise ExcelParser::EmailError.new "email format not valid" unless string[EMAIL] == string
+      raise EmailError.new "email format not valid" unless string[EMAIL] == string
     end
     
+  end
     class FormatError < StandardError
 
     end
@@ -78,7 +79,6 @@ class ExcelParser
     class EmailError < StandardError
 
     end
-  end
 
 
 end
