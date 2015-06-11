@@ -18,6 +18,6 @@ describe "Updating Vip customers database", :type => :feature do
     attach_file('birthdayFile', 'spec/fixtures/databasetest.xlsx')
     click_button 'Upload_excel'
     expect(page.status_code).to eq(200)
-    expect(page).to have_content 'Your database has been updated¡¡'
+    expect(VipClient.all.count).to eq(2)
   end
 end

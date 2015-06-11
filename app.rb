@@ -4,18 +4,23 @@ require 'bundler'
 Bundler.require :default, ENV['RACK_ENV'].to_sym
 
 require 'sinatra/base'
+require 'rack-flash'
 require 'dm-postgres-adapter'
 
 
 # HELPERS
 require './helpers/excel_parser'
+require './helpers/file_uploader'
 
 # MODELS
 require './models/vip_client.rb'
 
-
+include FileUploader
 
 class LaMareta < Sinatra::Base
+
+  enable :sessions
+  use Rack::Flash
 
   configure :development, :test do
     DataMapper.setup(:default, 'postgres://postgres@localhost/usersmareta')
@@ -33,15 +38,14 @@ class LaMareta < Sinatra::Base
   end
 
   post '/upload' do
-    filename = 'uploads/' + params['birthdayFile'][:filename]
+    filename = create_file(params['birthdayFile'][:filename])
 
-    File.open(filename, "w") do |f|
-      f.write(params['birthdayFile'][:tempfile].read)
-    end
+    write_file(filename, params['birthdayFile'][:tempfile])
 
     clients_list = ExcelParser.parse(filename)
     VipClient.insert_into_database(clients_list)
-    redirect '/uploaded'
+    flash[:notice] = "Your database has been updated succesfully" 
+    redirect '/'
   end
 
   get '/uploaded' do

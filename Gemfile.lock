@@ -74,6 +74,8 @@ GEM
     pony (1.11)
       mail (>= 2.0)
     rack (1.6.0)
+    rack-flash3 (1.0.5)
+      rack
     rack-protection (1.5.3)
       rack
     rack-test (0.6.3)
@@ -118,6 +120,7 @@ DEPENDENCIES
   dm-postgres-adapter
   pg
   pony
+  rack-flash3
   rack-test
   roo
   rspec
