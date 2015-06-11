@@ -4,13 +4,20 @@ class ExcelParser
   LETTERS = /[a-zA-Z]+/
   EMAIL = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   DATE_FORMAT = "%d-%m-%Y"
+  START_READING_LINE = 3
 
   class << self
     def parse(file_name)
       excel_file = create_roo_object(file_name)
       validates_format(excel_file)
+      fulfill_db_with(excel_file)     
+    end
+
+    private
+
+    def fulfill_db_with(excel_file)
       list_clients = []
-      3.upto(excel_file.last_row) do |line|
+      START_READING_LINE.upto(excel_file.last_row) do |line|
         data_client = {}
         data_client[:name] = excel_file.cell(line,'A')
         data_client[:birthday] = excel_file.cell(line,'B')
@@ -19,8 +26,6 @@ class ExcelParser
       end
       list_clients
     end
-
-    private
 
     def create_roo_object(file_name)
       if file_name =~ /xlsx$/
@@ -31,7 +36,7 @@ class ExcelParser
     end
 
     def validates_format(excel_file)  
-      result = 3.upto(excel_file.last_row).all? do |line|
+      result = START_READING_LINE.upto(excel_file.last_row).all? do |line|
         name = excel_file.cell(line,'A')
         date = excel_file.cell(line,'B')
         email = excel_file.cell(line, 'C')
@@ -46,33 +51,35 @@ class ExcelParser
       begin
         Date.strptime(string, DATE_FORMAT)
       rescue ArgumentError 
-        raise DateFormatError.new "Date format not valid" 
+        raise ExcelParser::DateFormatError.new "Date format not valid" 
       end
     end
 
     def check_name!(string)
-      raise NameError.new "Name format not valid" unless string[LETTERS] == string
+      raise ExcelParser::NameError.new "Name format not valid" unless string[LETTERS] == string
     end 
 
     def check_email!(string)
-      raise EmailError.new "email format not valid" unless string[EMAIL] == string
+      raise ExcelParser::EmailError.new "email format not valid" unless string[EMAIL] == string
     end
     
+    class FormatError < StandardError
+
+    end
+
+    class DateFormatError < StandardError
+
+    end
+
+    class NameError < StandardError
+
+    end
+
+    class EmailError < StandardError
+
+    end
   end
-end
 
-class FormatError < StandardError
 
 end
 
-class DateFormatError < StandardError
-
-end
-
-class NameError < StandardError
-
-end
-
-class EmailError < StandardError
-
-end
