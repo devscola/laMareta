@@ -34,5 +34,19 @@ describe VipClient do
       VipClient.insert_into_database(list_clients2)
       expect(VipClient.all.count).to eq(3)
     end
+    it "updates the info data of a client if already exists" do
+      list_clients = [
+        {name: "David", birthday: "13-12-1985", email: "daviddsrperiodismo@gmail.com"},
+        {name: "Javier", birthday: "05-05-1985", email: "javier@gmail.com"}
+      ]
+      list_clients2 = [
+        {name: "Pepe", birthday: "13-12-1985", email: "daviddsrperiodismo@gmail.com"},
+        {name: "Javier", birthday: "05-05-1985", email: "javier@gmail.com"},
+        {name: "Paco", birthday: "02-08-1985", email: "pacofiestas@gmail.com"}
+      ]
+      VipClient.insert_into_database(list_clients)
+      VipClient.insert_into_database(list_clients2)
+      expect(VipClient[0].name).to eq("Pepe")
+    end
   end
 end
