@@ -22,6 +22,8 @@ class ExcelParser
         data_client[:name] = excel_file.cell(line,'A')
         data_client[:birthday] = excel_file.cell(line,'B')
         data_client[:email] = excel_file.cell(line, 'C')
+        
+        data_client[:out] = true if excel_file.cell(line, 'D') == "out"
         list_clients << data_client
       end
       list_clients

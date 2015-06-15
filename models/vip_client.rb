@@ -9,11 +9,21 @@ class VipClient
   def self.insert_into_database(list_clients)
   	list_clients.each do |client|
       VipClient.create(client) unless exists?(client)
-      update(client)   
+      if client[:out] == true
+        delete(client)
+      else
+        update(client)
+      end   
   	end
   end
 
   private
+
+  def self.delete(client)
+    client_email = client[:email]
+    not_client_anymore = VipClient.first(:conditions => { :email => client_email })
+    not_client_anymore.destroy
+  end
 
   def self.update(client)
     old_client = find_old_data_from_this(client)

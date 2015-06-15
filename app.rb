@@ -43,6 +43,7 @@ class LaMareta < Sinatra::Base
     write_file(filename, params['birthdayFile'][:tempfile])
 
     clients_list = ExcelParser.parse(filename)
+
     VipClient.insert_into_database(clients_list)
     flash[:notice] = "Your database has been updated succesfully" 
     redirect '/'
