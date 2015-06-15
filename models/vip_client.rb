@@ -14,7 +14,7 @@ class VipClient
       else
         update(client)
       end   
-  	end
+    end
   end
 
   private
